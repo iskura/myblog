@@ -15,7 +15,7 @@ jobs:
     - name: Checkout repository     # 从 GitHub 仓库拉取代码
       uses: actions/checkout@v2
       with:
-        ref: main                   # 拉取 main 分支代码
+        ref: master                   # 拉取 main 分支代码
 
     # 步骤 2：设置 Node 环境
     - name: Setup Node.js           # 安装 Node.js 环境
