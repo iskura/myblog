@@ -13,13 +13,13 @@ jobs:
     steps:
     # 步骤 1：拉取代码
     - name: Checkout repository     # 从 GitHub 仓库拉取代码
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         ref: master                   # 拉取 main 分支代码
 
     # 步骤 2：设置 Node 环境
     - name: Setup Node.js           # 安装 Node.js 环境
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: 'v22'           # 设置 Node.js 版本
 
