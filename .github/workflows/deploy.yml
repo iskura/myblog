@@ -38,7 +38,7 @@ jobs:
     # 步骤 5：部署到 GitHub Pages (部署到 gh-pages 分支)
     - name: Deploy to GitHub Pages   # 使用 Hexo 部署到 GitHub Pages
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.MyBlog }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
+        SSH_PRIVATE_KEY: ${{ secrets.MYBLOG }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
         GIT_NAME: iskura                           # Git 用户名
         GIT_EMAIL: 1013655774@qq.com             # Git 用户邮箱
       run: |
