@@ -1,0 +1,51 @@
+name: MyBlog           # GitHub Actions 的名称，可自行命名
+
+# 当 push 事件发生时触发部署
+on:
+  push:
+    branches:
+      - main                       # 当推送到 main 分支时触发部署（根据你的分支选择）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest          # 运行环境选择最新的 Ubuntu
+
+    steps:
+    # 步骤 1：拉取代码
+    - name: Checkout repository     # 从 GitHub 仓库拉取代码
+      uses: actions/checkout@v2
+      with:
+        ref: main                   # 拉取 main 分支代码
+
+    # 步骤 2：设置 Node 环境
+    - name: Setup Node.js           # 安装 Node.js 环境
+      uses: actions/setup-node@v2
+      with:
+        node-version: 'v22'           # 设置 Node.js 版本
+
+    # 步骤 3：安装依赖
+    - name: Install dependencies    # 安装 Hexo 和相关依赖
+      run: |
+        npm install -g hexo-cli     # 安装 Hexo 命令行工具
+        npm install                 # 安装项目依赖
+
+    # 步骤 4：生成静态文件
+    - name: Hexo Generate            # 使用 Hexo 生成静态文件
+      run: |
+        hexo clean                  # 清理旧的生成文件
+        hexo generate               # 生成新的静态文件
+
+    # 步骤 5：部署到 GitHub Pages (部署到 gh-pages 分支)
+    - name: Deploy to GitHub Pages   # 使用 Hexo 部署到 GitHub Pages
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
+        GIT_NAME: iskura                           # Git 用户名
+        GIT_EMAIL: 1013655774@qq.com             # Git 用户邮箱
+      run: |
+        mkdir -p ~/.ssh/                              # 创建 SSH 配置目录
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa  # 将私钥写入文件
+        chmod 600 ~/.ssh/id_rsa                       # 设置私钥权限
+        ssh-keyscan github.com >> ~/.ssh/known_hosts  # 添加 GitHub 的 SSH 公钥到 known_hosts
+        git config --global user.name "$GIT_NAME"     # 配置 Git 用户名
+        git config --global user.email "$GIT_EMAIL"    # 配置 Git 用户邮箱
+        hexo deploy                                   # 使用 Hexo 部署博客
