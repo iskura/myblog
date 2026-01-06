@@ -102,5 +102,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
  type: git
- repo: https://github.com/iskura/myblog
+ repo: git@github.com:iskura/myblog.git
  branch: gh-pages
