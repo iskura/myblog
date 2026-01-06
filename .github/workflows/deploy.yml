@@ -4,7 +4,7 @@ name: MyBlog           # GitHub Actions 的名称，可自行命名
 on:
   push:
     branches:
-      - main                       # 当推送到 main 分支时触发部署（根据你的分支选择）
+      - master                       # 当推送到 main 分支时触发部署（根据你的分支选择）
 
 jobs:
   deploy:
